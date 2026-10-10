@@ -2,48 +2,33 @@ package main
 
 import (
 	"fmt"
+	"math/rand/v2"
+	"time"
 
-	"D_and_A_projects/internal/stack"
+	"D_and_A_projects/internal/stack/queue/queue"
 )
 
-// MAIN ENTRY POINT
+const SIZE int = 10
+
+type EmailJob struct {
+	From string
+	To   string
+}
+
 func main() {
-	s := stack.NewStack[string]()
+	q := queue.New[EmailJob]()
 
-	s.Push("Hello")
-	s.Push("World")
-	s.Push("TS")
-
-	s.DisplayStack()
-
-	v, err := s.Pop()
-	fmt.Printf("POP 1: %v\nERROR: %v\n", v, err)
-
-	peekValue, _ := s.Peek()
-	fmt.Printf("PEEK: %v\n", peekValue)
-
-	v, err = s.Pop()
-	fmt.Printf("POP 2: %v\nERROR: %v\n", v, err)
-	v, err = s.Pop()
-	fmt.Printf("POP 3: %v\nERROR: %v\n", v, err)
-
-	v, err = s.Pop()
-	fmt.Printf("POP 4: %v\nERROR: %v\n", v, err)
-
-	s.Push("Hello")
-	s.Push("World")
-	s.Push("TS")
-
-	s.DisplayStack()
-	s.Clear()
-	s.DisplayStack()
-
-	s.Push("Hello")
-	s.Push("World")
-	s.Push("TS")
-
-	for i, val := range s.Iter() {
-		fmt.Println(i, val)
+	for i := SIZE; i >= 0; i-- {
+		from := fmt.Sprintf("user%v@email.com", rand.IntN(SIZE))
+		to := fmt.Sprintf("user%v@email.com", rand.IntN(SIZE))
+		email := EmailJob{From: from, To: to}
+		q.Enqueue(email)
 	}
 
+	for email := range q.Drain() {
+		fmt.Println(q.String())
+		fmt.Printf("from : %v\t to: %v\nQueue length: %v\n", email.From, email.To, q.Len())
+		time.Sleep(time.Duration(rand.IntN(100)) * time.Millisecond * 50)
+	}
+	fmt.Println("Job finished!")
 }
