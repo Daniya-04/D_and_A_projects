@@ -5,7 +5,7 @@ import (
 	"math/rand/v2"
 	"time"
 
-	"D_and_A_projects/internal/stack/queue/queue"
+	"D_and_A_projects/internal/stack/queue"
 )
 
 const SIZE int = 10

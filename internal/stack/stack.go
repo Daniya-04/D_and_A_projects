@@ -21,13 +21,6 @@ func NewStack[T any]() *Stack[T] {
 	}
 }
 
-func (s *Stack[T]) Push1(Value T){
-	return &Stack[value]{
-		value: Value,
-		len: len++,
-	}
-}
-
 // PUBLIC FUNCTION LEN THAT RETURNS LENGTH OF A STACK
 func (s *Stack[T]) Len() int {
 	return s.len
